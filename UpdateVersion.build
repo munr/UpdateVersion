@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="UpdateVersion" default="build">
+	<tstamp/>
+	<property name="debug" value="true"/>
+	<property name="project.name" value="UpdateVersion"/>
+	<property name="project.FormalName" value="UpdateVersion"/>
+	<property name="src.dir" value="src"/>
+	<property name="build.dir" value="build"/>
+	<property name="dist.dir" value="${project.name}"/>
+	<property name="backup.name" value="..\${project.name}-backup-${tstamp.date}-${tstamp.time}.zip"/>
+	<property name="project.version" value="x.x"/>
+	<property name="dist.name" value="${project.name}-src-${project.version}.zip"/>
+	<target name="release-build" description="makes a release build, usage: 'nant release-build'">
+		<property name="debug" value="false"/>
+		<!-- Use script task to get this from AssemblyInfo.cs using a regular expression -->
+		<script language="C#">
+			<code><![CDATA[
+            public static void ScriptMain(Project project) {
+                string sourcePath = Path.Combine(project.BaseDirectory, Path.Combine(project.Properties["src.dir"], project.Properties["project.FormalName"]));
+                string assemblyInfoFileName = Path.Combine(sourcePath, "AssemblyInfo.cs");
+                StreamReader reader = File.OpenText(assemblyInfoFileName);
+
+                try {
+                    // Regular expression built with Regex: http://www.organicbit.com/regex/
+                    Regex expression = new Regex(@"^\[assembly: AssemblyVersion\(\""([0-9]+)\.([0-9]+)");
+                    string line = reader.ReadLine();
+                    while (line != null) {
+                        Match match = expression.Match(line);
+                        if (match.Success) {
+                            project.Properties["project.version"] = match.Result("$1.$2");
+                            break;
+                        }
+                        //else {
+						//	throw new Exception("Could not read version from AssemblyInfo.cs!");
+                        //}
+                        
+                        line = reader.ReadLine();
+                    }
+                } finally {
+                    // must remember to close the file or the compile may not work
+                    reader.Close();
+                }
+                
+                project.Properties["dist.name"] = string.Format("{0}-src-{1}.zip",
+					project.Properties["project.name"], project.Properties["project.version"]);
+            }
+        ]]></code>
+		</script>
+		<!-- <property name="dist.name" value="${project.name}-src-${project.version}.zip"/> -->
+		<echo message="Building ${project.name}-${project.version} (release)"/>
+		<call target="clean"/>
+		<call target="updateversion"/>
+		<call target="build"/>
+	</target>
+	<target name="clean" description="cleans up everything">
+		<delete dir="${build.dir}" failonerror="false"/>
+		<delete dir="${dist.dir}" failonerror="false"/>
+		<delete file="${dist.name}" failonerror="false"/>
+	</target>
+	<target name="updateversion" description="Updates the build and revision numbers based on the date and time">
+		<echo message="********************************************************************"/>
+		<echo message="** Updating version number "/>
+		<exec program="bin\UpdateVersion.exe" commandline="-b MonthDay -s 2002-11-23 -i &quot;${src.dir}\${project.FormalName}\AssemblyInfo.cs&quot; -o &quot;${src.dir}\${project.FormalName}\AssemblyInfo.cs&quot;" verbose="false"/>
+		<echo message="** Finished updating version number"/>
+		<echo message="********************************************************************"/>
+	</target>
+	<target name="build" description="compiles the source code">
+		<mkdir dir="${build.dir}"/>
+		<!-- compile UpdateVersion.exe -->
+		<csc target="exe" output="${build.dir}\${project.FormalName}.exe" debug="${debug}">
+			<sources basedir="${src.dir}\${project.FormalName}">
+				<includes name="**/*.cs"/>
+			</sources>
+			<arg value="/nowarn:1591"/>
+		</csc>
+	</target>
+	<target name="backup" depends="clean" description="make local backup">
+        <echo message="Creating backup ${backup.name}"/>
+        <zip zipfile="${backup.name}">
+            <fileset basedir=".">
+                <includes name="**"/>
+            </fileset>
+        </zip>
+    </target>
+    <target name="dist" description="create release distribution: usage nant dist">
+        <!-- build a clean release distribution for release -->
+        <property name="debug" value="false"/>
+        <echo message="Debug = ${debug}"/>
+
+        <call target="clean"/>
+        <call target="release-build"/>
+
+        <copy file="${build.dir}\UpdateVersion.exe" todir="${dist.dir}\bin"/>
+        
+        <copy todir="${dist.dir}">
+            <fileset>
+                <includes name="bin/**"/>
+                <includes name="doc/**"/>
+                <includes name="src/**"/>
+                <!-- start: exclude VS.Net stuff -->
+                <excludes name="src/UpdateVersion/bin/**"/>
+                <excludes name="src/UpdateVersion/obj/**"/>
+                <!-- end: exclude VS.Net stuff -->
+                <includes name="examples/**"/>
+                <includes name="UpdateVersion.build"/>
+                <includes name="UpdateVersion.csproj"/>
+                <includes name="Readme.txt"/>
+                <includes name="License.txt"/>
+            </fileset>
+        </copy>
+
+        <delete file="${dist.name}" failonerror="false"/>
+        <zip zipfile="${dist.name}">
+            <fileset basedir="${dist.dir}">
+                <includes name="**"/>
+            </fileset>
+        </zip>
+
+    </target>
+</project>

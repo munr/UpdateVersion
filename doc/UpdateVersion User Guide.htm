@@ -1,0 +1,638 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 11 (filtered)">
+<title>UpdateVersion User Guide</title>
+
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:Verdana;}
+h1
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:Arial;}
+h2
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:Arial;
+	font-style:italic;}
+h3
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:13.0pt;
+	font-family:Arial;}
+h4
+	{margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Times New Roman";}
+p.MsoList, li.MsoList, div.MsoList
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.25in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	font-size:12.0pt;
+	font-family:Verdana;}
+p.MsoList2, li.MsoList2, div.MsoList2
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	font-size:12.0pt;
+	font-family:Verdana;}
+p.MsoListBullet2, li.MsoListBullet2, div.MsoListBullet2
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	font-size:12.0pt;
+	font-family:Verdana;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	font-size:12.0pt;
+	font-family:Verdana;}
+p.MsoBodyTextIndent, li.MsoBodyTextIndent, div.MsoBodyTextIndent
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.25in;
+	font-size:12.0pt;
+	font-family:Verdana;}
+p.MsoBodyTextFirstIndent, li.MsoBodyTextFirstIndent, div.MsoBodyTextFirstIndent
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	text-indent:10.5pt;
+	font-size:12.0pt;
+	font-family:Verdana;}
+p.MsoBodyTextFirstIndent2, li.MsoBodyTextFirstIndent2, div.MsoBodyTextFirstIndent2
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:.25in;
+	text-indent:10.5pt;
+	font-size:12.0pt;
+	font-family:Verdana;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US link=blue vlink=purple>
+
+<div class=Section1>
+
+<h1>UpdateVersion User Guide</h1>
+
+<h2>Overview</h2>
+
+<p class=MsoBodyText>UpdateVersion searches its input for a .NET
+AssemblyVersion attribute and calculates a new version number using one of
+several algorithms. UpdateVersion can use a file or the standard input stream
+for input and it can write its output to a file or the standard output stream.</p>
+
+<p class=MsoBodyText>UpdateVersion calculates and outputs new version numbers
+using one of several algorithms. You can use it with Visual Studio .NET to
+update your AssemblyInfo.* file on demand. You can use it from a NAnt script to
+update your assembly version numbers every time you build your project. You can
+also run it directly from the command line, in a batch file, or from a make
+file.</p>
+
+<p class=MsoBodyText>UpdateVersion will calculate a new revision number only or
+it can calculate a new build number and a new revision number at the same time.</p>
+
+<p class=MsoBodyText>UpdateVersion can calculate the build number by
+incrementing the existing build number or it can calculate the build number
+based on the project start date. </p>
+
+<p class=MsoBodyText>UpdateVersion can calculate the revision number by
+incrementing the existing revision number or it can calculate the revision
+number based on the number of seconds since midnight.</p>
+
+<h2>Revision History</h2>
+
+<h3>Version 1.2</h3>
+
+<p class=MsoNormal>Matt Griffith - <a href="http://mattgriffith.net/">http://mattgriffith.net</a></p>
+
+<p class=MsoListBullet2><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Added Version option.</p>
+
+<p class=MsoListBullet2><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Attempted to improve Unicode handling by outputting to file using
+the default encoding.</p>
+
+<p class=MsoNormal>Scott Hanselman - <a href="http://www.hanselman.com/blog/">http://www.hanselman.com/blog/</a>
+</p>
+
+<p class=MsoListBullet2><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Added BuildDay algorithm for build number calculation.</p>
+
+<p class=MsoListBullet2><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Added Fixed algorithm for revision number calculation.</p>
+
+<p class=MsoListBullet2><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Updated the Regular expression to handle this condition:
+[assembly: AssemblyVersionAttribute(&quot;1.0.3296.1&quot;)]</p>
+
+<p class=MsoListBullet2><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Refactored VersionUpdater.cs.</p>
+
+<h3>Version 1.1</h3>
+
+<p class=MsoNormal>Mike Gunderloy - <a href="http://www.larkware.com/">http://www.larkware.com</a></p>
+
+<p class=MsoListBullet2><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>Added the Pin feature.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h2>Command Line Options</h2>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='margin-left:-.05in;border-collapse:collapse;border:none'>
+ <tr style='height:13.5pt'>
+  <td width=72 valign=top style='width:.75in;border:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:13.5pt'>
+  <p class=MsoNormal>Short Form</p>
+  </td>
+  <td width=108 valign=top style='width:81.0pt;border:solid windowtext 1.0pt;
+  border-left:none;padding:0in 5.4pt 0in 5.4pt;height:13.5pt'>
+  <p class=MsoNormal>Long Form</p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border:solid windowtext 1.0pt;
+  border-left:none;padding:0in 5.4pt 0in 5.4pt;height:13.5pt'>
+  <p class=MsoNormal>Valid Values</p>
+  </td>
+  <td width=241 valign=top style='width:180.85pt;border:solid windowtext 1.0pt;
+  border-left:none;padding:0in 5.4pt 0in 5.4pt;height:13.5pt'>
+  <p class=MsoNormal>Description</p>
+  </td>
+ </tr>
+ <tr style='height:29.25pt'>
+  <td width=72 valign=top style='width:.75in;border:solid windowtext 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>-s</p>
+  </td>
+  <td width=108 valign=top style='width:81.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>--startdate</p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>Any date string which DateTime can parse for the current
+  culture. Example: 2002-11-23</p>
+  </td>
+  <td width=241 valign=top style='width:180.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>The date the project started. The startdate option is
+  required if the MonthDay build type is specified. Otherwise the startdate
+  option is ignored.</p>
+  <p class=MsoNormal>&nbsp;</p>
+  </td>
+ </tr>
+ <tr style='height:29.25pt'>
+  <td width=72 valign=top style='width:.75in;border:solid windowtext 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>-b</p>
+  </td>
+  <td width=108 valign=top style='width:81.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>--build</p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>&quot;Fixed&quot; | &quot;MonthDay&quot; |
+  &quot;Increment&quot; | “BuildDay”</p>
+  </td>
+  <td width=241 valign=top style='width:180.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>Specifies the algorithm UpdateVersion should use to
+  calculate the build number. The default is &quot;Fixed&quot; meaning the
+  build number will remain the same if you do not specify one of the other
+  build algorithms. “MonthDay” calculates the build number based on [monthssincestart][dayofmonth].
+  “BuildDay” calculates the build number based on [lastdigitofyear][dayofyear].</p>
+  </td>
+ </tr>
+ <tr style='height:29.25pt'>
+  <td width=72 valign=top style='width:.75in;border:solid windowtext 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>-p</p>
+  </td>
+  <td width=108 valign=top style='width:81.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>--pin</p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>A version number in the x.x.x.x format.</p>
+  </td>
+  <td width=241 valign=top style='width:180.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>Specifies the version number UpdateVersion should output.
+  The pin option allows you to pin the version number. </p>
+  </td>
+ </tr>
+ <tr style='height:29.25pt'>
+  <td width=72 valign=top style='width:.75in;border:solid windowtext 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>-r</p>
+  </td>
+  <td width=108 valign=top style='width:81.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>--revision</p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>&quot;Fixed&quot; | &quot;Automatic&quot; |
+  &quot;Increment&quot; | </p>
+  </td>
+  <td width=241 valign=top style='width:180.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>Specifies the algorithm UpdateVersion should use to
+  calculate the revision number. &quot;Automatic&quot; calculates the revision
+  number based on [secsincemidnight/10]. &quot;Increment&quot; calculates the
+  revision number by incrementing the current revision number by one. &quot;Fixed&quot;
+  causes the revision number to remain the same.</p>
+  </td>
+ </tr>
+ <tr style='height:29.25pt'>
+  <td width=72 valign=top style='width:.75in;border:solid windowtext 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>-i</p>
+  </td>
+  <td width=108 valign=top style='width:81.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>--inputfile</p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>Path to an existing file.</p>
+  </td>
+  <td width=241 valign=top style='width:180.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>The file UpdateVersion should use as the input. If the
+  inputfile option is not present UpdateVersion will use the standard input
+  stream as its input.</p>
+  </td>
+ </tr>
+ <tr style='height:29.25pt'>
+  <td width=72 valign=top style='width:.75in;border:solid windowtext 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>-o</p>
+  </td>
+  <td width=108 valign=top style='width:81.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>--outputfile</p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>A valid filename.</p>
+  </td>
+  <td width=241 valign=top style='width:180.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>The file UpdateVersion should write its output to. If the
+  outputfile option is not present UpdateVersion will write its output to the
+  standard output stream.</p>
+  </td>
+ </tr>
+ <tr style='height:29.25pt'>
+  <td width=72 valign=top style='width:.75in;border:solid windowtext 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>-v</p>
+  </td>
+  <td width=108 valign=top style='width:81.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>--version</p>
+  </td>
+  <td width=156 valign=top style='width:117.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>&quot;Assembly&quot; | &quot;File&quot;</p>
+  </td>
+  <td width=241 valign=top style='width:180.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt;height:29.25pt'>
+  <p class=MsoNormal>Specifies the version number to update. The default is &quot;Assembly&quot;
+  which is backward compatible with previous versions of UpdateVersion. Use &quot;–v
+  Assembly&quot; to update the AssemblyVersion attribute. Use &quot;–v File&quot;
+  to update the AssemblyFileVersion attribute.</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<h2>Return Values</h2>
+
+<p class=MsoList2 style='margin-left:.75in;text-indent:-.5in'>0<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>UpdateVersion successfully read the input and wrote the output. Note:
+UpdateVersion returns 0 even when it does not find an AssemblyVersion attribute
+string to update in the input. If that happens UpdateVersion writes a warning
+to the standard error stream.</p>
+
+<p class=MsoList2 style='margin-left:.75in;text-indent:-.5in'>1<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>UpdateVersion was unable to parse the command line options. See the
+standard error stream for more information. Note: UpdateVersion does not write
+to the output when this happens. </p>
+
+<p class=MsoList2 style='margin-left:.75in;text-indent:-.5in'>2<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>UpdateVersion was unable to read the input. See the standard error
+stream for more information. Note: UpdateVersion does not write to the output
+when this happens.</p>
+
+<p class=MsoList2 style='margin-left:.75in;text-indent:-.5in'>3<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>An error occurred while UpdateVersion was searching for the
+AssemblyVersion attribute or while it was calculating the new version number.
+See the standard error stream for more information. Note: UpdateVersion does
+not write to the output when this happens.</p>
+
+<p class=MsoList2 style='margin-left:.75in;text-indent:-.5in'>4<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>UpdateVersion was unable to write the output. See the standard error
+stream for more information. Note: UpdateVersion does not write to the output
+when this happens.</p>
+
+<h2>Usage Examples</h2>
+
+<h3>Command Line or Batch File</h3>
+
+<p class=MsoBodyText>Standard input and standard output:</p>
+
+<p class=MsoBodyText>C:\&gt;echo AssemblyVersion(&quot;1.0.0.0&quot;) |
+UpdateVersion AssemblyVersion(&quot;1.0.0.8298&quot;)</p>
+
+<p class=MsoBodyText>C:\&gt;echo AssemblyVersion(&quot;1.0.0.0&quot;) |
+UpdateVersion -b Increment AssemblyVersion(&quot;1.0.1.8310&quot;)</p>
+
+<p class=MsoBodyText>C:\&gt;echo AssemblyVersion(&quot;1.0.0.0&quot;) | UpdateVersion
+-b Increment -r Increment</p>
+
+<p class=MsoBodyText>AssemblyVersion(&quot;1.0.1.1&quot;)</p>
+
+<p class=MsoBodyText>C:\&gt;echo AssemblyVersion(&quot;1.0.0.0&quot;) |
+UpdateVersion -b MonthDay -s 2002-11-23</p>
+
+<p class=MsoBodyText>AssemblyVersion(&quot;1.0.23.8335&quot;)</p>
+
+<p class=MsoBodyText>C:\&gt;echo AssemblyVersion(&quot;1.0.0.0&quot;) |
+UpdateVersion -b MonthDay -s 2000-11-23</p>
+
+<p class=MsoBodyText>AssemblyVersion(&quot;1.0.2423.8339&quot;)</p>
+
+<p class=MsoBodyText>C:\&gt;echo AssemblyVersion(&quot;1.0.0.0&quot;) |
+UpdateVersion -b MonthDay -s 11/23/2000</p>
+
+<p class=MsoBodyText>AssemblyVersion(&quot;1.0.2423.8339&quot;)</p>
+
+<p class=MsoBodyText>C:\&gt;echo AssemblyVersion(&quot;1.0.0.0&quot;) |
+UpdateVersion -p 1.2.3.4 AssemblyVersion(&quot;1.2.3.4&quot;)</p>
+
+<p class=MsoBodyText>C:\&gt;echo AssemblyVersion(&quot;1.0.0.0&quot;) |
+UpdateVersion -b BuildDay AssemblyVersion(&quot;1.0.3298.7453&quot;)</p>
+
+<p class=MsoBodyText>C:\&gt;echo AssemblyVersion(&quot;1.0.0.0&quot;) |
+UpdateVersion -b Increment -r Fixed</p>
+
+<p class=MsoNormal>AssemblyVersion(&quot;1.0.1.0&quot;)</p>
+
+<p class=MsoNormal>C:\&gt;echo AssemblyFileVersion(&quot;1.0.0.0&quot;) |
+UpdateVersion -v File</p>
+
+<p class=MsoNormal>AssemblyFileVersion(&quot;1.0.0.7517&quot;)</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>Redirecting to and from standard input and standard output</p>
+
+<p class=MsoNormal>C:\&gt;UpdateVersion -b Increment &lt; Input.txt &gt; Output.txt</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>Specify the input and output files on the command line</p>
+
+<p class=MsoNormal>C:\&gt;UpdateVersion -b Increment -i Input.txt -o Output.txt</p>
+
+<p class=MsoBodyText>You can mix and match all of these techniques so you could
+easily specify an input file on the command line and write the output to
+standard output like so:</p>
+
+<p class=MsoNormal>C:\&gt;UpdateVersion -b Increment -i Input.txt</p>
+
+<p class=MsoBodyText>To specify the output file on the command line and read
+the input from standard input do this:</p>
+
+<p class=MsoBodyText>C:\&gt;echo AssemblyVersion(&quot;1.0.0.0&quot;) | UpdateVersion
+-b Increment –o Output.txt</p>
+
+<h3>Use UpdateVersion with Visual Studio .NET</h3>
+
+<p class=MsoBodyText>You can add UpdateVersion to the Tools menu as an External
+Tool. You can then select the UpdateVersion command from the menu to update
+your AssemblyInfo.cs or AssemblyInfo.vb file. Just select Tools -&gt; External
+Tools... -&gt; Add and enter values similar to the following:</p>
+
+<p class=MsoNormal>Title: Update Version Number</p>
+
+<p class=MsoNormal>Command: UpdateVersion.exe      </p>
+
+<p class=MsoBodyText>Arguments: -b MonthDay -s 2002-11-23 -i
+&quot;AssemblyInfo.cs&quot; -o &quot;AssemblyInfo.cs&quot; </p>
+
+<p class=MsoList>Initial directory: $(ProjectDir)</p>
+
+<p class=MsoList>Use Output window: Checked</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoBodyText>If UpdateVersion is not in your PATH you will need to
+provide the full path where UpdateVersion can be found. You can specify any
+valid options for the Arguments. </p>
+
+<h3>Use UpdateVersion in a Makefile</h3>
+
+<p class=MsoBodyText>Create a new Makefile with the following contents:</p>
+
+<p class=MsoBodyText>test: </p>
+
+<p class=MsoBodyTextFirstIndent>UpdateVersion -b MonthDay -s 2002-01-21 -i Input.txt
+-o Output.txt</p>
+
+<p class=MsoBodyText>Then run nmake. </p>
+
+<h3>Use UpdateVersion with NAnt</h3>
+
+<p class=MsoBodyText>Create a new NAnt script named Test.build with the
+following contents:</p>
+
+<p class=MsoBodyText>&lt;project name=&quot;ExecTest&quot;
+default=&quot;test&quot;&gt;</p>
+
+<p class=MsoNormal>&lt;tstamp/&gt;</p>
+
+<p class=MsoBodyTextFirstIndent>&lt;target name=&quot;test&quot;
+description=&quot;tests using exec to run UpdateVersion.exe&quot;&gt;</p>
+
+<p class=MsoBodyTextFirstIndent>&lt;echo
+message=&quot;********************************************************************&quot;/&gt;</p>
+
+<p class=MsoBodyTextFirstIndent2>&lt;echo message=&quot;** Running
+UpdateVersion.exe.&quot;/&gt;</p>
+
+<p class=MsoBodyTextFirstIndent>&lt;exec program=&quot;UpdateVersion.exe&quot;
+commandline=&quot;-b MonthDay -s 2002-01-21 -i Input.txt -o </p>
+
+<p class=MsoBodyTextFirstIndent></p>
+
+<p class=MsoNormal>Output.txt&quot; verbose=&quot;true&quot;
+failonerror=&quot;true&quot; /&gt;</p>
+
+<p class=MsoBodyTextFirstIndent>&lt;echo message=&quot;** End of
+Tests&quot;/&gt;</p>
+
+<p class=MsoBodyTextFirstIndent>&lt;echo
+message=&quot;********************************************************************&quot;/&gt;</p>
+
+<p class=MsoNormal>&lt;/target&gt;</p>
+
+<p class=MsoList>&lt;/project&gt;</p>
+
+<p class=MsoList>Then run NAnt.exe. </p>
+
+<p class=MsoBodyText>Because UpdateVersion returns a non-zero value when it
+fails your NAnt script will fail as long as the exec tasks' failonerror option
+is true.</p>
+
+<p class=MsoBodyText>&nbsp;</p>
+
+<p class=MsoNormal>Copyright © 2002 Matt Griffith</p>
+
+<p class=MsoBodyText>Permission is hereby granted, free of charge, to any
+person obtaining </p>
+
+<p class=MsoBodyText>a copy of this software and associated documentation files
+(the &quot;Software&quot;), </p>
+
+<p class=MsoBodyText>to deal in the Software without restriction, including
+without limitation </p>
+
+<p class=MsoBodyText>the rights to use, copy, modify, merge, publish,
+distribute, sublicense, </p>
+
+<p class=MsoBodyText>and/or sell copies of the Software, and to permit persons
+to whom the </p>
+
+<p class=MsoBodyText>Software is furnished to do so, subject to the following
+conditions:</p>
+
+<p class=MsoBodyText>The above copyright notice and this permission notice
+shall be included in </p>
+
+<p class=MsoBodyText>all copies or substantial portions of the Software.</p>
+
+<p class=MsoBodyText>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT
+WARRANTY OF ANY KIND, EXPRESS OR</p>
+
+<p class=MsoBodyText>IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, </p>
+
+<p class=MsoBodyText>FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL </p>
+
+<p class=MsoBodyText>THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER </p>
+
+<p class=MsoBodyText>LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, </p>
+
+<p class=MsoBodyText>OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.</p>
+
+</div>
+
+</body>
+
+</html>

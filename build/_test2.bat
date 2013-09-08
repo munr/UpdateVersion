@@ -1,0 +1,1 @@
+UpdateVersion.exe --startdate 2002-11-23 --build MonthDay --revision Increment --inputfile "TestAssemblyInfo.cs" --outputfile "TestAssemblyInfoOut.cs"

@@ -1,0 +1,1 @@
+[assembly: AssemblyVersion("1.0.5117.1")]
